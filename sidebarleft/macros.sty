@@ -9,8 +9,8 @@
 }
 % renders a standard latex list but abstracts away the environment definition (begin/end)
 \newcommand{\cvlist}[1] {
+    \textcolor{darkcol}{
     \begin{itemize}
-    \linespread{1}{
         \setlength{\topsep}{0pt}
         \setlength{\partopsep}{-10pt}
         \setlength{\parskip}{-1pt}
@@ -22,8 +22,9 @@
         \setlength{\rightmargin}{0pt}
         \setlength{\itemindent}{0pt}
         {#1}
-    }
     \end{itemize}
+    }
+
 }
 
 %----------------------------------------------------------------------------------------
