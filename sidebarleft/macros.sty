@@ -1,0 +1,149 @@
+
+
+%----------------------------------------------------------------------------------------
+%	 CV LIST
+%----------------------------------------------------------------------------------------
+
+\newcommand{\bold}[1] {
+    \textbf{\textcolor{darkcol}{{#1}}}
+}
+% renders a standard latex list but abstracts away the environment definition (begin/end)
+\newcommand{\cvlist}[1] {
+    \begin{itemize}
+    \linespread{1}{
+        \setlength{\topsep}{0pt}
+        \setlength{\partopsep}{-10pt}
+        \setlength{\parskip}{-1pt}
+        \setlength{\labelwidth}{0pt}
+        \setlength{\labelsep}{8pt}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parsep}{0pt}
+        \setlength{\leftmargin}{0pt}
+        \setlength{\rightmargin}{0pt}
+        \setlength{\itemindent}{0pt}
+        {#1}
+    }
+    \end{itemize}
+}
+
+%----------------------------------------------------------------------------------------
+%	 CV TEXT
+%----------------------------------------------------------------------------------------
+
+% base class to wrap any text based stuff here. Renders like a paragraph.
+% Allows complex commands to be passed, too.
+% param 1: *any
+\newcommand{\cvtext}[1] {
+    \begin{tabular*}{1\mpwidth}{p{1\mpwidth}}
+    \parbox{1\mpwidth}{#1}
+    \end{tabular*}
+}
+
+%----------------------------------------------------------------------------------------
+%	CV SECTION
+%----------------------------------------------------------------------------------------
+
+% Renders a a CV section headline with a nice underline in main color.
+% param 1: section title
+\newcommand{\cvsection}[1] {
+    \vspace{5pt}
+    \cvtext{
+        \textbf{\large{\textcolor{darkcol}{{#1}}}}\\[-4pt]
+        \textcolor{lightcol}{ \rule{0.15\textwidth}{1.5pt} } \\
+    }
+}
+
+%----------------------------------------------------------------------------------------
+%	META SKILL
+%----------------------------------------------------------------------------------------
+
+% Renders a progress-bar to indicate a certain skill in percent.
+% param 1: name of the skill / tech / etc.
+% param 2: level (for example in years)
+% param 3: percent, values range from 0 to 1
+\newcommand{\cvskill}[3] {
+    \begin{tabular*}{1\mpwidth}{p{0.6\mpwidth}  r}
+    \textcolor{darkcol}{\textbf{\small{#1}}} & \textcolor{maincol}{\small{#2}}
+    \vspace{-10pt}
+    \end{tabular*}
+
+    \hspace{4pt}
+    \begin{tikzpicture}[scale=1,rounded corners=1.5pt,very thin]
+    \fill [lightcol] (0,0) rectangle (1\mpwidth, 0.1);
+    \fill [maincol] (0,0) rectangle (#3\mpwidth, 0.1);\
+    \end{tikzpicture}%
+    \vspace*{-8px}
+}
+
+
+%----------------------------------------------------------------------------------------
+%	 CV EVENT
+%----------------------------------------------------------------------------------------
+
+% Renders a table and a paragraph (cvtext) wrapped in a parbox (to ensure minimum content
+% is glued together when a pagebreak appears).
+% Additional Information can be passed in text or list form (or other environments).
+% the work you did
+% param 1: time-frame i.e. Sep 14 - Jan 15 etc.
+% param 2:	 event name (job position etc.)
+% param 3: Customer, Employer, Industry
+% param 4: Short description
+% param 5: work done (optional)
+% param 6: technologies include (optional)
+% param 7: achievements (optional)
+\newcommand{\cvevent}[7] {
+% we wrap this part in a parbox, so title and description are not separated on a pagebreak
+% if you need more control on page breaks, remove the parbox
+    \parbox{\mpwidth}{
+        \begin{tabular*}{1\mpwidth}{p{0.72\mpwidth}  r}
+        \textcolor{maincol}{\textbf{#2}} & \colorbox{maincol}{\makebox[0.25\mpwidth]{\textcolor{white}{#1}}} \\
+        \textcolor{darkcol}{\textbf{#3}} & \\
+        \end{tabular*}\\[8pt]
+
+        \ifthenelse{\isempty{#4}}{}{
+            \cvtext{#4}\\
+        }
+    }
+
+    \ifthenelse{\isempty{#5}}{}{
+        {#5}
+    }
+
+    \ifthenelse{\isempty{#6}}{}{
+        \cvtext{\small\bold{#6}}
+    }
+
+    \ifthenelse{\isempty{#7}}{}{
+        \cvtext{\textbf{Achievements include:} {#7}}
+    }
+    \vspace{20pt}
+}
+
+%----------------------------------------------------------------------------------------
+%	 CV META EVENT
+%----------------------------------------------------------------------------------------
+
+% Renders a CV event on the sidebar
+% param 1: title
+% param 2: subtitle (optional)
+% param 3: customer, employer, etc,. (optional)
+% param 4: info text (optional)
+\newcommand{\cvmetaevent}[4] {
+    \ifthenelse{\isempty{#1}}{}{
+        \textcolor{maincol} {\cvtext{\textbf{\begin{flushleft}#1\end{flushleft}}}}
+    }
+
+    \ifthenelse{\isempty{#2}}{}{
+        \textcolor{darkcol} {\cvtext{\textbf{\small{#2}}} }
+    }
+
+
+    \ifthenelse{\isempty{#3}}{}{
+        \cvtext{{ \textcolor{darkcol} {\small{#3}} }}\\
+    }
+
+    \ifthenelse{\isempty{#4}}{}{
+        \cvtext{{ \textcolor{darkcol} {\small{#4}} }}\\
+    }
+
+}
